@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.siriusif.model.helpers.MathContextSinglton;
+
 /**
  * Workshift Entity 
  * CREATE TABLE "Workshifts" (
@@ -82,6 +84,7 @@ public class Workshift {
 	}
 	
 	public void setDaySum(BigDecimal daySum) {
+		MathContextSinglton.getRoundedSum();
 		this.daySum = daySum;
 	}
 }
