@@ -1,6 +1,7 @@
 package com.siriusif.model;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.siriusif.model.helpers.MathContextSinglton;
+
 
 /**
  * Workshift Entity 

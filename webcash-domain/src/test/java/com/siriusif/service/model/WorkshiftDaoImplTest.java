@@ -3,7 +3,7 @@ package com.siriusif.service.model;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
+
 import java.util.Date;
 
 import org.junit.Test;
@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.siriusif.helper.Helper;
 import com.siriusif.model.Workshift;
-import com.siriusif.model.helpers.MathContextSinglton;
+
 
 public class WorkshiftDaoImplTest extends AbstractDaoImplTest{
 
@@ -79,9 +79,7 @@ public class WorkshiftDaoImplTest extends AbstractDaoImplTest{
 		int size = workshiftDao.list().size();
 		
 		Workshift workshift = new Workshift();
-//		MathContextSinglton ms = new MathContextSinglton();
-//		ms.getRoundedSum();
-		workshift.setDaySum(BigDecimal.valueOf(13.50));
+		workshift.setDaySum(BigDecimal.valueOf(13.506));
 		workshiftDao.add(workshift);
 		Workshift wsFroDB = workshiftDao.find(workshift.getId()); 
 		// get this workshift from database
