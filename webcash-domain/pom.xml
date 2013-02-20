@@ -9,6 +9,13 @@
 
 	<name>webcash-domain</name>
 	<url>http://maven.apache.org</url>
+	
+	<repositories>
+		<repository>
+            <id>jasperreports</id>
+            <url>http://jasperreports.sourceforge.net/maven2</url>
+        </repository>
+    </repositories>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -85,5 +92,10 @@
 			<artifactId>gson</artifactId>
 			<version>2.2.2</version>
 		</dependency>
+		<dependency>
+		 	<groupId>net.sf.jasperreports</groupId>
+    		<artifactId>jasperreports</artifactId>
+    		<version>5.0.1</version>
+    	</dependency>
 	</dependencies>
 </project>
