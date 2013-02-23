@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="a877f529-0ac0-49d5-8826-563513f450c3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="Heading 1" fontSize="16" isBold="true"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#00FFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="0bf48ad7-6852-4923-9a74-fa2dc53492e0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     dining_table."id" AS dining_table_id,
+     dining_table."description" AS dining_table_description,
+     dining_table."height" AS dining_table_height,
+     dining_table."cleft" AS dining_table_cleft,
+     dining_table."name" AS dining_table_name,
+     dining_table."ctop" AS dining_table_ctop,
+     dining_table."width" AS dining_table_width,
+     dining_table."hall_id" AS dining_table_hall_id
+FROM
+     "public"."dining_table" dining_table]]>
+	</queryString>
+	<field name="dining_table_id" class="java.math.BigDecimal"/>
+	<field name="dining_table_description" class="java.lang.String"/>
+	<field name="dining_table_height" class="java.lang.Integer"/>
+	<field name="dining_table_cleft" class="java.lang.Integer"/>
+	<field name="dining_table_name" class="java.lang.String"/>
+	<field name="dining_table_ctop" class="java.lang.Integer"/>
+	<field name="dining_table_width" class="java.lang.Integer"/>
+	<field name="dining_table_hall_id" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="42a8085f-7f13-4235-ac51-50640db0b2e0" x="11" y="12" width="138" height="36"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[�����]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="7" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="4" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement uuid="98b2752b-47ed-4399-91f7-806049fa0514" x="11" y="0" width="202" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{dining_table_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
