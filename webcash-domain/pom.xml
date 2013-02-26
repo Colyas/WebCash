@@ -15,6 +15,11 @@
             <id>jasperreports</id>
             <url>http://jasperreports.sourceforge.net/maven2</url>
         </repository>
+        <repository>
+            <id>sonatype-nexus-releases</id>
+            <name>Sonatype Nexus Releases</name>
+			<url>https://oss.sonatype.org/content/repositories/releases/</url>
+      	</repository>
     </repositories>
 
 	<properties>
@@ -113,5 +118,10 @@
         		</exclusion>
     		</exclusions>
     	</dependency>
+    	<dependency>
+    		<groupId>org.eclipse.birt.runtime</groupId>
+    		<artifactId>org.eclipse.birt.runtime</artifactId>
+    		<version>4.2.1a</version>
+		</dependency>
 	</dependencies>
 </project>
