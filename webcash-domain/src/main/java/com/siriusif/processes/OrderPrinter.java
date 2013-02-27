@@ -42,7 +42,7 @@ public class OrderPrinter {
 		int pageWidth = 132;
 		try{
 			JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(SampleDataProvider.getSampleOrders(),false); //создаем коллекцию Jasper Report Bean Collection
-			JasperDesign jasperDesign = JRXmlLoader.load("src/main/resources/OrderPrinter.jrxml");
+			JasperDesign jasperDesign = JRXmlLoader.load("src/main/resources/PrOrder.jrxml");
 			jasperDesign.setName("The dynamically generated report");
 		    jasperDesign.setPageWidth(pageWidth);
 		    jasperDesign.setColumnWidth(112);
@@ -54,13 +54,13 @@ public class OrderPrinter {
 		    jasperDesign.setIgnorePagination(true);
 		    
 		    
-		    JRDesignField field = new JRDesignField();
-		    field.setName("total");
-		    field.setValueClass(java.lang.Double.class);
-		    jasperDesign.addField(field);
+//		    JRDesignField field = new JRDesignField();
+//		    field.setName("total");
+//		    field.setValueClass(java.lang.Double.class);
+//		    jasperDesign.addField(field);
 //
 //		    field = new JRDesignField();
-//		    field.setName("Price");
+//		    field.setName("suborders");
 //		    field.setValueClass(java.lang.String.class);
 //		    jasperDesign.addField(field);
 //
@@ -90,21 +90,21 @@ public class OrderPrinter {
 		    staticText.getLineBox().setLeftPadding(10);
 		    band.addElement(staticText);
 
-		    JRDesignTextField textField = new JRDesignTextField();
-		    textField.setX(60);
-		    textField.setY(0);
-		    textField.setWidth(60);
-		    textField.setHeight(20);
-		    textField.setHorizontalAlignment(HorizontalAlignEnum.LEFT);
-		    JRDesignExpression expression = new JRDesignExpression();
-		    expression.setText("$F{total}");
-		    textField.getLineBox().getPen().setLineWidth(1);
-		    textField.setExpression(expression);
-		    textField.getLineBox().getTopPen().setLineWidth(1);
-		    textField.getLineBox().getRightPen().setLineWidth(1);
-		    textField.getLineBox().getBottomPen().setLineWidth(1);
-		    textField.getLineBox().setLeftPadding(10);
-		    band.addElement(textField);
+//		    JRDesignTextField textField = new JRDesignTextField();
+//		    textField.setX(60);
+//		    textField.setY(0);
+//		    textField.setWidth(60);
+//		    textField.setHeight(20);
+//		    textField.setHorizontalAlignment(HorizontalAlignEnum.LEFT);
+//		    JRDesignExpression expression = new JRDesignExpression();
+//		    expression.setText("$F{total}");
+//		    textField.getLineBox().getPen().setLineWidth(1);
+//		    textField.setExpression(expression);
+//		    textField.getLineBox().getTopPen().setLineWidth(1);
+//		    textField.getLineBox().getRightPen().setLineWidth(1);
+//		    textField.getLineBox().getBottomPen().setLineWidth(1);
+//		    textField.getLineBox().setLeftPadding(10);
+//		    band.addElement(textField);
 
 		    staticText = new JRDesignStaticText();
 		    staticText.setX(0);
@@ -128,7 +128,7 @@ public class OrderPrinter {
 //		    textField.setHeight(20);
 //		    textField.setPositionType(PositionTypeEnum.FLOAT);
 //		    expression = new JRDesignExpression();
-//		    expression.setText("$F{total} + \" \" + $F{total}");
+//		    expression.setText("$F{suborders}");
 //		    textField.setExpression(expression);
 //		    textField.getLineBox().getRightPen().setLineWidth(1);
 //		    textField.getLineBox().getBottomPen().setLineWidth(1);
