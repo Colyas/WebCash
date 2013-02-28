@@ -1,0 +1,9 @@
+<?xml version="1.0"?><!-- iReport connections -->
+<iReportConnectionSet>
+	<iReportConnection name="getSampleOrders" connectionClass="com.jaspersoft.ireport.designer.connection.JavaBeanDataSourceConnection">
+		<connectionParameter name="Type"><![CDATA[BEAN_COLLECTION]]></connectionParameter>
+		<connectionParameter name="MethodToCall"><![CDATA[getSampleOrders]]></connectionParameter>
+		<connectionParameter name="FactoryClass"><![CDATA[com.siriusif.sampledata.SampleDataProvider]]></connectionParameter>
+		<connectionParameter name="UseFieldDescription"><![CDATA[false]]></connectionParameter>
+	</iReportConnection>
+</iReportConnectionSet>

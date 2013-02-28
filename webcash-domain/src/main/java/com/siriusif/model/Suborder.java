@@ -3,26 +3,6 @@ package com.siriusif.model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Администратор
- *
- */
-/**
- * @author Администратор
- *
- */
-/**
- * @author Администратор
- *
- */
-/**
- * @author Администратор
- *
- */
-/**
- * @author Администратор
- * 
- */
 public class Suborder {
 	private int index;
 	private List<Sale> sales;

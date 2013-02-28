@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrOrder_suborders_sales" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6ad86826-0a63-42f5-b297-a239db6cd8f3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="Table Dataset 1" uuid="e57d3a0f-07a2-4f51-a63c-68487a3a46df"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="amount" class="java.lang.Double">
+		<fieldDescription><![CDATA[amount]]></fieldDescription>
+	</field>
+	<field name="calculatedSum" class="java.lang.Double">
+		<fieldDescription><![CDATA[calculatedSum]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="printed" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[printed]]></fieldDescription>
+	</field>
+	<field name="salesGood" class="com.siriusif.model.Good">
+		<fieldDescription><![CDATA[salesGood]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="52" splitType="Stretch">
+			<textField>
+				<reportElement uuid="d519b1ae-cd18-4437-9286-e463da781fab" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="20" width="549" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{amount} +"x"+ $F{salesGood}.getPrice() +"="+ $F{calculatedSum}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="85680e0c-3e23-4514-8ec7-2b55045f5dd1" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{salesGood}.getName()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
