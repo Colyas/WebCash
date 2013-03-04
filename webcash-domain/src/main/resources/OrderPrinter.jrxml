@@ -12,30 +12,9 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="37" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="974fadd7-144c-4613-8e49-4df19a77a568" x="0" y="0" width="100" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Замовлення]]></text>
-			</staticText>
-		</band>
-	</title>
 	<pageHeader>
 		<band height="0" splitType="Stretch"/>
 	</pageHeader>
-	<columnHeader>
-		<band height="0" splitType="Stretch"/>
-	</columnHeader>
-	<detail>
-		<band height="0" splitType="Stretch"/>
-	</detail>
-	<columnFooter>
-		<band height="0" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="0" splitType="Stretch"/>
-	</pageFooter>
 	<summary>
 		<band height="0" splitType="Stretch"/>
 	</summary>

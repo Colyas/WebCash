@@ -44,7 +44,7 @@
 		</box>
 	</style>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["e:/CIRIUS/WebCash/webcash-domain/src/main/resources/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["D:\\Java\\Work Sergiy\\WebCash\\WebCash\\webcash-domain\\src\\main\\resources\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[]]>
@@ -83,7 +83,7 @@
 			<subreport>
 				<reportElement uuid="9e2412c9-b901-4a5c-9c57-87d8ae2bbb71" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="500" height="125"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{suborders})]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PrOrder_suborders.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PrOrder_suborders.jrxml"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
