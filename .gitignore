@@ -6,6 +6,4 @@ Servers
 /*/.metadata
 *.iml
 .idea
-/webcash-spec/chromedriver.log
-/webcash-domain/*.log
-/webcash/*.log
+/*/*.log
