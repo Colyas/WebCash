@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.List;
+
 /**
  * Basic DAO operations dependent with Hibernate's specific classes
  * 
@@ -21,7 +22,7 @@ public class HibernateDaoImpl<E, K extends Serializable> implements GenericDao<E
  
     private SessionFactory sessionFactory;
     protected Class<? extends E> daoType;
- 
+    
     @SuppressWarnings("unchecked")
 	public HibernateDaoImpl() {
         daoType = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass())
@@ -35,6 +36,12 @@ public class HibernateDaoImpl<E, K extends Serializable> implements GenericDao<E
  
     protected Session currentSession() {
         return sessionFactory.getCurrentSession();
+    }
+    
+    public void clearAll() {
+    	for (E entity : list()){
+    		currentSession().delete(entity);
+    	}
     }
  
     public void add(E entity) {
