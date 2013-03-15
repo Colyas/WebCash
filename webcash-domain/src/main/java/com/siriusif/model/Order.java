@@ -44,10 +44,10 @@ public class Order {
 	/**
 	 * sum order include discountSum
 	 */
-	@Column(name="summa", nullable = false, precision=16, scale=2)
+	@Column(name="summa", nullable = true, precision=16, scale=2)
 	private BigDecimal sum;
 	
-	@Transient
+	@ManyToOne(targetEntity=User.class)
 	private User author;
 	
 	@Column(name = "discount", nullable = true)
@@ -91,7 +91,7 @@ public class Order {
 	/**
 	 * money from client
 	 */
-	@Column(name="payed", nullable = false, precision=16, scale=2)
+	@Column(name="payed", nullable = true, precision=16, scale=2)
 	private BigDecimal payed;
 	
 	/**

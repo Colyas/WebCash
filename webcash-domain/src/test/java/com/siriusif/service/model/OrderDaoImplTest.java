@@ -29,7 +29,7 @@ public class OrderDaoImplTest extends AbstractSpringTest{
 	@Before
 	public void setUp(){
 		stubUser = new User();
-		stubUser.setLogin("user");
+		stubUser.setName("user");
 		stubUser.setLogin("login");
 		stubUser.setPassword("****");
 		userDao.add(stubUser);
@@ -116,13 +116,12 @@ public class OrderDaoImplTest extends AbstractSpringTest{
 	@Test
 	public void testRemoveOrder(){
 		Order order = new Order();
-		User user = new User();
-		userDao.add(user);
-		order.setAuthor(user);
+		order.setAuthor(stubUser);
+		order.setWorkShift(5l);
 		orderDao.add(order);
 		//after we removed order
 		orderDao.remove(order);
 		//user should remain in database
-		assertNotNull(userDao.find(user.getId()));
+		assertNotNull(userDao.find(stubUser.getId()));
 	}
 }
