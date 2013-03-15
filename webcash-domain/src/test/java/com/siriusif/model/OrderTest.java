@@ -12,7 +12,7 @@ public class OrderTest {
 	public void testValidationOrder() {
 		Order order = new Order();
 
-		order.setAuthor("User");
+		order.setAuthor(new User());
 		order.setTableNum(1);
 		order.setWorkShift(1L);
 

@@ -87,4 +87,13 @@ public class Workshift {
 	public void setDaySum(BigDecimal daySum) {
 		this.daySum = daySum;
 	}
+
+	@Override
+	public String toString() {
+		return "Workshift [\n\t id=" + id + ",\n\t dailyId=" + dailyId
+				+ ",\n\t openedAt=" + openedAt + ",\n\t closedAt=" + closedAt
+				+ ",\n\t daySum=" + daySum + "]";
+	}
+	
+	
 }

@@ -74,5 +74,10 @@ public class WorkshiftProcessTest extends AbstractSpringTest{
 		assertEquals(3, newWorkshift.getDailyId());
 	}
 
+	@Test
+	public void testGetOpenedWorkshift(){
+		fail("not implenemted");
+	}
+	
 	
 }

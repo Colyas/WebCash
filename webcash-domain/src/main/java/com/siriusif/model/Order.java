@@ -5,11 +5,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -42,8 +47,8 @@ public class Order {
 	@Column(name="summa", nullable = false, precision=16, scale=2)
 	private BigDecimal sum;
 	
-	@Column(name="author", nullable=false, length=100)
-	private String author;
+	@Transient
+	private User author;
 	
 	@Column(name = "discount", nullable = true)
 	private int discount;
@@ -166,11 +171,11 @@ public class Order {
 		this.sum = sum;
 	}
 
-	public String getAuthor() {
+	public User getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(String author) {
+	public void setAuthor(User author) {
 		this.author = author;
 	}
 

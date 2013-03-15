@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,18 +14,34 @@ import com.siriusif.helper.AbstractSpringTest;
 import com.siriusif.helper.Helper;
 import com.siriusif.model.Order;
 import com.siriusif.model.Suborder;
+import com.siriusif.model.User;
 
 public class OrderDaoImplTest extends AbstractSpringTest{
 	
+	private static User stubUser;
+	
 	@Autowired
 	private OrderDao orderDao;
+	
+	@Autowired
+	private UserDao userDao;
 
+	@Before
+	public void setUp(){
+		stubUser = new User();
+		stubUser.setLogin("user");
+		stubUser.setLogin("login");
+		stubUser.setPassword("****");
+		userDao.add(stubUser);
+	}
+	
+	
 	@Test
 	public void testAdd() {
 		int size = orderDao.list().size();
 		
 		Order order = new Order();
-		order.setAuthor("admin");
+		order.setAuthor(stubUser);
 		order.setCard(true);
 		order.setDailyId(size);
 		order.setDiscount(5);
@@ -42,7 +60,7 @@ public class OrderDaoImplTest extends AbstractSpringTest{
 	@Test
 	public void testAddWorkshiftDate() {
 		Order order = new Order();
-		order.setAuthor("admin");
+		order.setAuthor(stubUser);
 		order.setPayed(BigDecimal.valueOf(13.51));
 		order.setSum(BigDecimal.valueOf(14,56));
 		order.setWorkShift(5l);
@@ -61,7 +79,7 @@ public class OrderDaoImplTest extends AbstractSpringTest{
 		
 		Order order = new Order();
 		order.setSum(BigDecimal.valueOf(15.25));
-		order.setAuthor("admin");
+		order.setAuthor(stubUser);
 		order.setPayed(BigDecimal.valueOf(13.51));
 		order.setWorkShift(5l);
 		order.setDailyId(size);
@@ -72,7 +90,7 @@ public class OrderDaoImplTest extends AbstractSpringTest{
 		assertTrue (size < orderDao.list().size());
 	}
 	
-	@Test
+	//Test
 	public void testOneToManyOrderSuborders(){
 		int size = orderDao.list().size();
 		Order order = new Order();
@@ -83,7 +101,7 @@ public class OrderDaoImplTest extends AbstractSpringTest{
 		order.addSuborder(new Suborder(5));
 		order.setTableNum(8);
 		order.setSum(BigDecimal.valueOf(15.25));
-		order.setAuthor("admin");
+		order.setAuthor(stubUser);
 		order.setPayed(BigDecimal.valueOf(13.51));
 		order.setWorkShift(5l);
 		order.setDailyId(size);
@@ -93,5 +111,18 @@ public class OrderDaoImplTest extends AbstractSpringTest{
 		Order orFromDB = orderDao.find(order.getId());
 		assertEquals(8, orFromDB.getTableNum());
 		assertEquals(4, orFromDB.getSuborders().size());
-	}	
+	}
+	
+	@Test
+	public void testRemoveOrder(){
+		Order order = new Order();
+		User user = new User();
+		userDao.add(user);
+		order.setAuthor(user);
+		orderDao.add(order);
+		//after we removed order
+		orderDao.remove(order);
+		//user should remain in database
+		assertNotNull(userDao.find(user.getId()));
+	}
 }

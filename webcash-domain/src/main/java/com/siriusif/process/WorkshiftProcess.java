@@ -89,5 +89,15 @@ public class WorkshiftProcess {
 			LOGGER.warn("closeWorkshift: null instead of workshift");
 		}
 	}
+
+	/**
+	 * Return last opened workshift.
+	 * If there is no opened workshifts than return null.
+	 * @return
+	 */
+	public Workshift getOpenedWorkshift() {
+		// TODO Auto-generated method stub
+		return null;		
+	}
 	
 }
