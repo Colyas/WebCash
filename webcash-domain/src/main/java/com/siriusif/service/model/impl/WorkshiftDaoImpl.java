@@ -3,8 +3,6 @@ package com.siriusif.service.model.impl;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import com.siriusif.model.Workshift;

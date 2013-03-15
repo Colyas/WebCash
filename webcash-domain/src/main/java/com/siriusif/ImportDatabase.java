@@ -5,15 +5,12 @@ import java.io.IOException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.siriusif.helper.Helper;
 import com.siriusif.model.Hall;
-import com.siriusif.model.Order;
 
 /**
  * This console app allow us to create database with initial data
