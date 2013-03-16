@@ -26,7 +26,7 @@ public class OrderProcess {
 		} else {
 			Order order = new Order();
 			order.setAuthor(whoCreates);
-//			order.setWorkShift(workShift);
+			order.setWorkshift(workshift);
 //			order.setDailyId(dailyId)
 //			order.setDate(date)
 			//	TODO SB : Not implemented

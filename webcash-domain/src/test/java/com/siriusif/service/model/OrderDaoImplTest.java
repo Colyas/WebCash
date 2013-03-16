@@ -15,6 +15,7 @@ import com.siriusif.helper.Helper;
 import com.siriusif.model.Order;
 import com.siriusif.model.Suborder;
 import com.siriusif.model.User;
+import com.siriusif.model.Workshift;
 
 public class OrderDaoImplTest extends AbstractSpringTest{
 	
@@ -25,6 +26,11 @@ public class OrderDaoImplTest extends AbstractSpringTest{
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private WorkshiftDao workshiftDao;
+
+	private static Workshift stubWorkshift;
 
 	@Before
 	public void setUp(){
@@ -33,6 +39,12 @@ public class OrderDaoImplTest extends AbstractSpringTest{
 		stubUser.setLogin("login");
 		stubUser.setPassword("****");
 		userDao.add(stubUser);
+		
+		stubWorkshift = new Workshift();
+		stubWorkshift.setOpenedAt(Helper.stringToDate("01/01/2012"));
+		stubWorkshift.setDailyId(42);
+		workshiftDao.add(stubWorkshift);
+		
 	}
 	
 	
@@ -51,7 +63,7 @@ public class OrderDaoImplTest extends AbstractSpringTest{
 		order.setSum(BigDecimal.valueOf(14,56));
 		order.setTableNum(5);
 		order.setType(false);
-		order.setWorkShift(5l);
+		order.setWorkshift(stubWorkshift);
 		orderDao.add(order);
 		
 		assertTrue (size < orderDao.list().size());
@@ -61,16 +73,18 @@ public class OrderDaoImplTest extends AbstractSpringTest{
 	public void testAddWorkshiftDate() {
 		Order order = new Order();
 		order.setAuthor(stubUser);
-		order.setPayed(BigDecimal.valueOf(13.51));
-		order.setSum(BigDecimal.valueOf(14,56));
-		order.setWorkShift(5l);
+		order.setWorkshift(stubWorkshift);
 		orderDao.add(order);
 		Date workingDate = Helper.stringToDate("22/01/2013");
-		order.setWorkingDate(workingDate);
+		stubWorkshift.setOpenedAt((workingDate));
+		//the date shouldn't change
+		workshiftDao.update(stubWorkshift);
 		orderDao.update(order);
 		
 		Order orFromDB = orderDao.find(order.getId());
-		assertEquals(workingDate, orFromDB.getWorkingDate());
+		assertNotSame(workingDate, orFromDB.getWorkingDate());
+		//strange behavior of this object. Ajust it.
+		assertEquals(stubWorkshift.getOpenedAt(), orFromDB.getWorkingDate());
 	}
 	
 	@Test
@@ -81,7 +95,7 @@ public class OrderDaoImplTest extends AbstractSpringTest{
 		order.setSum(BigDecimal.valueOf(15.25));
 		order.setAuthor(stubUser);
 		order.setPayed(BigDecimal.valueOf(13.51));
-		order.setWorkShift(5l);
+		order.setWorkshift(stubWorkshift);
 		order.setDailyId(size);
 		orderDao.add(order);
 		Order orFromDB = orderDao.find(order.getId());
@@ -103,7 +117,7 @@ public class OrderDaoImplTest extends AbstractSpringTest{
 		order.setSum(BigDecimal.valueOf(15.25));
 		order.setAuthor(stubUser);
 		order.setPayed(BigDecimal.valueOf(13.51));
-		order.setWorkShift(5l);
+		order.setWorkshift(stubWorkshift);
 		order.setDailyId(size);
 		orderDao.add(order);
 		
@@ -117,7 +131,7 @@ public class OrderDaoImplTest extends AbstractSpringTest{
 	public void testRemoveOrder(){
 		Order order = new Order();
 		order.setAuthor(stubUser);
-		order.setWorkShift(5l);
+		order.setWorkshift(stubWorkshift);
 		orderDao.add(order);
 		//after we removed order
 		orderDao.remove(order);

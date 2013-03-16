@@ -5,16 +5,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -47,7 +44,8 @@ public class Order {
 	@Column(name="summa", nullable = true, precision=16, scale=2)
 	private BigDecimal sum;
 	
-	@ManyToOne(targetEntity=User.class)
+	@ManyToOne
+	@JoinColumn(name = "author_id")
 	private User author;
 	
 	@Column(name = "discount", nullable = true)
@@ -61,8 +59,6 @@ public class Order {
 	@Column(name = "tableNum", nullable = false)
 	private int tableNum;
 	
-//	private String originalAutor;??????
-	
 	/**
 	 * order was printed on a fiscal printer
 	 */
@@ -75,15 +71,9 @@ public class Order {
 	@Column(name="type", columnDefinition="boolean default false") 
 	private boolean type;
 	
-	/**
-	 * working date
-	 */
-	@Column(name = "workingDate", nullable = true, columnDefinition = "TIMESTAMP", insertable = false)
-	@Temporal(TemporalType.DATE)
-	private Date workingDate;
-	
-	@Column(name = "workshift", nullable = false)
-	private Long workShift;
+	@ManyToOne
+	@JoinColumn(name = "workshift_id")
+	private Workshift workshift;
 	
 	@Column(name = "nomeroc", nullable = true)
 	private int nomerok;
@@ -121,7 +111,7 @@ public class Order {
 	 */
 
 	public boolean isValid() {
-		if (tableNum > 0 && author != null && workShift > 0) {
+		if (tableNum > 0 && author != null && workshift != null) {
 			return true;
 		} else {
 			return false;
@@ -211,20 +201,12 @@ public class Order {
 		this.type = type;
 	}
 
-	public Date getWorkingDate() {
-		return workingDate;
+	public Workshift getWorkshift() {
+		return workshift;
 	}
 
-	public void setWorkingDate(Date workingDate) {
-		this.workingDate = workingDate;
-	}
-
-	public Long getWorkShift() {
-		return workShift;
-	}
-
-	public void setWorkShift(Long workShift) {
-		this.workShift = workShift;
+	public void setWorkshift(Workshift workshift) {
+		this.workshift = workshift;
 	}
 
 	public int getNomerok() {
@@ -265,6 +247,10 @@ public class Order {
 
 	public void setSuborders(List<Suborder> suborders) {
 		this.suborders = suborders;
+	}
+
+	public Date getWorkingDate() {
+		return workshift.getOpenedAt();
 	}
 
 }

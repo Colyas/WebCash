@@ -14,7 +14,7 @@ public class OrderTest {
 
 		order.setAuthor(new User());
 		order.setTableNum(1);
-		order.setWorkShift(1L);
+		order.setWorkshift(new Workshift());
 
 		assertTrue(order.isValid());
 	}
