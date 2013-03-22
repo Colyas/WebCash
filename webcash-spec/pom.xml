@@ -2,42 +2,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
           http://maven.apache.org/maven-v4_0_0.xsd">
-
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.siriusif</groupId>
+	
+	<parent>
+		<groupId>com.siriusif</groupId>
+		<artifactId>webcash-parent</artifactId>
+		<version>0.2-SNAPSHOT</version>
+		<relativePath>../webcash-parent</relativePath>
+	</parent>
+	
 	<artifactId>webcash-spec</artifactId>
 	<packaging>jar</packaging>
-	<version>0.2-SNAPSHOT</version>
 	<name>webcash-specs</name>
-	<url>http://maven.apache.org</url>
 
-	<repositories>
-		<repository>
-			<id>prime-repo</id>
-			<name>PrimeFaces Maven Repository</name>
-			<url>http://repository.primefaces.org</url>
-			<layout>default</layout>
-		</repository>
-
-		<repository>
-			<id>jvnet-nexus-releases</id>
-			<name>jvnet-nexus-releases</name>
-			<url>https://maven.java.net/content/repositories/releases</url>
-		</repository>
-
-		<repository>
-			<id>apache-snapshots</id>
-			<name>apache-snapshots</name>
-			<url>http://repository.apache.org/snapshots</url>
-		</repository>
-
-	</repositories>
 
 	<properties>
 		<!-- IMPRTANT : Only integration tests aviable -->
 		<skipTests>true</skipTests>
 
-		<spring.version>3.1.1.RELEASE</spring.version>
 		<jsf.version>2.1.13</jsf.version>
 		<selenium.version>2.29.0</selenium.version>
 	</properties>
@@ -96,32 +78,12 @@
 			<artifactId>selenium-chrome-driver</artifactId>
 			<version>${selenium.version}</version>
 		</dependency>
-		<!-- Log4j library -->
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>1.5.8</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.6.6</version>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-		</dependency>
-
 
 		<dependency>
 			<groupId>com.siriusif</groupId>
 			<artifactId>webcash</artifactId>
 			<type>war</type>
-			<version>0.2-SNAPSHOT</version>
+			<version>${project.version}</version>
 			<scope>tomcat</scope>
 		</dependency>
 
@@ -144,19 +106,19 @@
 						<dependency>
 							<groupId>javax.faces</groupId>
 							<artifactId>javax.faces-api</artifactId>
-							<version>2.1</version>
+							<version>${jsf.version}</version>
 						</dependency>
 
 						<dependency>
-							<groupId>javax.faces</groupId>
+							<groupId>com.sun.faces</groupId>
 							<artifactId>jsf-api</artifactId>
-							<version>2.1</version>
+							<version>${jsf.impl.version}</version>
 						</dependency>
 
 						<dependency>
-							<groupId>javax.faces</groupId>
+							<groupId>com.sun.faces</groupId>
 							<artifactId>jsf-impl</artifactId>
-							<version>2.1</version>
+							<version>${jsf.impl.version}</version>
 						</dependency>
 
 
