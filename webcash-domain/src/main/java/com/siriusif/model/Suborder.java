@@ -15,23 +15,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 @Entity
 @Table(name = "suborder")
 public class Suborder {
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
-	
 
 	/**
-	 * index of suborder 
+	 * index of suborder
 	 */
 	@Column(name = "index", nullable = true)
 	private int index;
-	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy = "suborder")
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "suborder")
 	private List<Sale> sales;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "order_id")
 	private Order order;
@@ -52,13 +52,15 @@ public class Suborder {
 
 	/**
 	 * Sum of sales (not including discount) in suborder
+	 * 
 	 * @return total sum of suborder
 	 */
 	public BigDecimal getTotal() {
 		// TODO change from double to Currency
 		BigDecimal sum = BigDecimal.ZERO;
 		for (Sale s : sales) {
-			sum = sum.add(s.getCalculatedSum()).setScale(2, BigDecimal.ROUND_HALF_UP);
+			sum = sum.add(s.getCalculatedSum()).setScale(2,
+					BigDecimal.ROUND_HALF_UP);
 		}
 		return sum;
 	}
@@ -77,9 +79,12 @@ public class Suborder {
 		return sales;
 	}
 
-	// public void setSales(List<Sale> sales) {
-	// this.sales = sales;
-	// }
+	public void setSales(List<Sale> sales) {
+		this.sales = sales;
+		for (Sale sale : sales) {
+			sale.setSuborder(this);
+		}
+	}
 
 	public Order getOrder() {
 		return order;
@@ -91,8 +96,8 @@ public class Suborder {
 
 	public Long getId() {
 		return id;
-}
-	
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}

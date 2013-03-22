@@ -1,9 +1,52 @@
 {
-	"author": "administrator",
-	"tableNum": "3",
- 	"workShift": "5",
- 	"sum":  "13.51",
-	"dailyId": "8",
-	"payed": "15.27"
+    "author": "administrator",
+    "tableNum": "3",
+    "workShift": "5",
+    "sum": "13.51",
+    "dailyId": "8",
+    "payed": "15.27",
+    "suborders": [
+        {
+            "index": "1",
+            "sales": [
+                {
+                    "amount": "1"
+                },
+                {
+                    "amount": "1"
+                },
+                {
+                    "amount": "1"
+                }
+            ]
+        },
+        {
+            "index": "2",
+            "sales": [
+                {
+                    "amount": "1"
+                },
+                {
+                    "amount": "1"
+                },
+                {
+                    "amount": "1"
+                }
+            ]
+        },
+        {
+            "index": "3",
+            "sales": [
+                {
+                    "amount": "1"
+                },
+                {
+                    "amount": "1"
+                },
+                {
+                    "amount": "1"
+                }
+            ]
+        }
+    ]
 }
-  

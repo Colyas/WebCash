@@ -6,6 +6,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.siriusif.model.Group;
 import com.siriusif.model.Hall;
+import com.siriusif.model.Order;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -37,9 +38,10 @@ public class Helper {
 		}
 		return today;
 	}
-	
+
 	/**
 	 * Cut's time part from java.util.Date value
+	 * 
 	 * @param date
 	 * @return date without time part
 	 */
@@ -58,7 +60,7 @@ public class Helper {
 		return cal.getTime();
 	}
 
-	//TODO SB : Add javadoc
+	// TODO SB : Add javadoc
 	public static BufferedReader getCPFileReader(String fileName)
 			throws UnsupportedEncodingException {
 		InputStream in = Helper.class.getResourceAsStream(fileName);
@@ -67,26 +69,40 @@ public class Helper {
 		return bufferedReader;
 	}
 
-	//TODO SB : Add javadoc
-	public static <T> T fromJson(String fileName, Class<T> classOfT) throws JsonSyntaxException, JsonIOException, UnsupportedEncodingException {
+	// TODO SB : Add javadoc
+	public static <T> T fromJson(String fileName, Class<T> classOfT)
+			throws JsonSyntaxException, JsonIOException,
+			UnsupportedEncodingException {
 		Gson gson = new GsonBuilder().setDateFormat("dd/mm/yyyy").create();
 		return gson.fromJson(getCPFileReader(fileName), classOfT);
 	}
-	
-	public static Hall fromJsonHall(String fileName) throws JsonSyntaxException, JsonIOException, UnsupportedEncodingException{
+
+	public static Hall fromJsonHall(String fileName)
+			throws JsonSyntaxException, JsonIOException,
+			UnsupportedEncodingException {
 		Hall hall = fromJson(fileName, Hall.class);
-		//because links aren't set automatically
-		hall.setTables(hall.getTables());			
+		// because links aren't set automatically
+		hall.setTables(hall.getTables());
 		return hall;
-	}	
-	
-	public static Group[] fromJsonGroup(String fileName) throws JsonSyntaxException, JsonIOException, UnsupportedEncodingException{
+	}
+
+	public static Group[] fromJsonGroup(String fileName)
+			throws JsonSyntaxException, JsonIOException,
+			UnsupportedEncodingException {
 		Group[] groups = fromJson(fileName, Group[].class);
-		//because links aren't set automatically
-		for(Group group : groups){
+		// because links aren't set automatically
+		for (Group group : groups) {
 			group.fixReferencesToParentGroup();
 		}
 		return groups;
-		
+	}
+
+	public static Order fromJsonOrder(String fileName)
+			throws JsonSyntaxException, JsonIOException,
+			UnsupportedEncodingException {
+		Order order = fromJson(fileName, Order.class);
+		// because links aren't set automatically
+		order.setSuborders(order.getSuborders());
+		return order;
 	}
 }

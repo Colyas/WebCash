@@ -29,7 +29,7 @@ public class ImportDatabase {
 		LOGGER.info("Import started.");
 		Hall hall = Helper.fromJsonHall("/demo_hall.json");
 		Group[] groups = Helper.fromJsonGroup("/grouplist.json");
-//		Order order = Helper.fromJson("/order.json", Order.class);
+		Order order = Helper.fromJsonOrder("/order.json");
 		
 		String profile=null;
 		//define profile as invocation parameter
@@ -43,8 +43,7 @@ public class ImportDatabase {
 		for (Group group : groups){
 			session.save(group);
 		}
-//		session.delete(order);
-//		session.save(order);
+		session.save(order);
 		session.getTransaction().commit();
 		session.close();
 		LOGGER.info("Import compleate.");

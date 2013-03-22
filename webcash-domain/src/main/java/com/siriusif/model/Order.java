@@ -263,6 +263,10 @@ public class Order {
 
 	public void setSuborders(List<Suborder> suborders) {
 		this.suborders = suborders;
+		for(Suborder suborder : suborders){
+			suborder.setOrder(this);
+			suborder.setSales(suborder.getSales());
+		}
 	}
 
 }
