@@ -7,3 +7,4 @@ Servers
 *.iml
 .idea
 /*/*.log
+/webcash-android/bin
