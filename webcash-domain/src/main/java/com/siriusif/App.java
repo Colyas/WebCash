@@ -1,7 +1,14 @@
 package com.siriusif;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -10,6 +17,10 @@ import com.google.gson.JsonSyntaxException;
 import com.siriusif.helper.Helper;
 import com.siriusif.model.Good;
 import com.siriusif.model.Group;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import static com.siriusif.model.helpers.TestHelper.money;
 
 /**
@@ -20,7 +31,7 @@ public class App {
 	private static Logger LOGGER = Logger.getLogger(App.class);
 	public static Group[] groups;
 	
-	public static void main1(String[] args) throws JsonSyntaxException, JsonIOException, UnsupportedEncodingException{
+	public static void main(String[] args) throws JsonSyntaxException, JsonIOException, UnsupportedEncodingException, IOException, TemplateException{
 		LOGGER.info("Import started.");
 		groups = Helper.fromJson("/grouplist.json",Group[].class);
 		for(Group group : groups){
@@ -33,6 +44,24 @@ public class App {
 			printGoodsOfGroup(currentGroup);
 			printSubgroupsAndTheirGoods(currentGroup);
 		}
+		
+		Configuration configuration = new Configuration();
+		
+
+		Template template = configuration.getTemplate("src/main/resources/group.ftl");
+//		Template template = configuration.getTemplate("D:/Java/group.ftl");
+		
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("groups", groups);
+		
+		Writer out = new OutputStreamWriter(System.out);
+        template.process(data, out);
+        out.flush();
+        
+        Writer file = new FileWriter (new File("src/main/resources/group.xhtml"));
+        template.process(data, file);
+        file.flush();
+        file.close();
 		
 //		Group currentGroup = groups[1];
 //		LOGGER.info("Група : " + currentGroup.getgName());
@@ -55,7 +84,7 @@ public class App {
 		}
 	}
 	
-	public static void main(String[] args){
+	public static void main1(String[] args){
 		BigDecimal val1 = money(15.25);
 		BigDecimal val2 = money(10.00);
 		int val3 = val1.compareTo(val1);
