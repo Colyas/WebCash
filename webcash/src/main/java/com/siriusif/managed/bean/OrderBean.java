@@ -1,7 +1,14 @@
 package com.siriusif.managed.bean;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -21,6 +28,10 @@ import com.siriusif.model.Suborder;
 import com.siriusif.process.OrderProcess;
 import com.siriusif.service.model.GroupDao;
 import com.siriusif.service.model.SaleDao;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 
 import static com.siriusif.jsf.utils.JSFHelper.jsf;
 
@@ -178,6 +189,26 @@ public class OrderBean {
 		saleId = sale.getId();
 		orderProcess.deleteSale(saleId);
 		order = orderProcess.getOrder(orderId);
+	}
+	
+	public void printOrder(ActionEvent event) throws IOException, TemplateException{
+		order = orderProcess.getOrder(orderId);
+		
+		Configuration configuration = new Configuration();
+		
+		Template template = configuration.getTemplate("src/main/resources/order.ftl");
+		
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("order", order);
+		
+		Writer out = new OutputStreamWriter(System.out);
+        template.process(data, out);
+        out.flush();
+        
+        Writer file = new FileWriter (new File("src/main/webapp/pages/order_print.html"));
+        template.process(data, file);
+        file.flush();
+        file.close();
 	}
 
 	public BigDecimal getChange() {

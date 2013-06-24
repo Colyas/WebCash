@@ -120,8 +120,9 @@
 			<h:form>
 				<p:commandButton value="#{msgs.order_btn_pay}"
 					onclick="paidDialog.show();" />
-				<p:button value="#{msgs.order_btn_print_bill}" />
-				<p:button value="#{msgs.order_btn_print_kitchen}" />
+				<p:commandButton value="#{msgs.order_btn_print_bill}" icon="ui-icon-print">
+				</p:commandButton>
+				<p:commandButton value="#{msgs.order_btn_print_kitchen}" actionListener="#{orderBean.printOrder}"/>
 				<p:button value="#{msgs.order_btn_print_discount}" />
 				<p:button value="#{msgs.order_btn_close}" href="/pages/hall_use.jsf" />
 			</h:form>
