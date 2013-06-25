@@ -1,8 +1,10 @@
 package com.siriusif;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -11,9 +13,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import com.lowagie.text.DocumentException;
 import com.siriusif.helper.Helper;
 import com.siriusif.model.Good;
 import com.siriusif.model.Group;
@@ -31,7 +35,7 @@ public class App {
 	private static Logger LOGGER = Logger.getLogger(App.class);
 	public static Group[] groups;
 	
-	public static void main(String[] args) throws JsonSyntaxException, JsonIOException, UnsupportedEncodingException, IOException, TemplateException{
+	public static void main2(String[] args) throws JsonSyntaxException, JsonIOException, UnsupportedEncodingException, IOException, TemplateException{
 		LOGGER.info("Import started.");
 		groups = Helper.fromJson("/grouplist.json",Group[].class);
 		for(Group group : groups){
@@ -90,4 +94,20 @@ public class App {
 		int val3 = val1.compareTo(val1);
 		System.out.println(val3);
 	}
+	
+	public static void main(String[] args) 
+            throws IOException, DocumentException {
+        String inputFile = "src/main/resources/group.xhtml";
+        String url = new File(inputFile).toURI().toURL().toString();
+        String outputFile = "src/main/resources/firstdoc.pdf";
+        OutputStream os = new FileOutputStream(outputFile);
+        
+        ITextRenderer renderer = new ITextRenderer();
+        renderer.setDocument(url);
+        renderer.layout();
+        renderer.createPDF(os);
+        
+        os.close();
+    }
+
 }
