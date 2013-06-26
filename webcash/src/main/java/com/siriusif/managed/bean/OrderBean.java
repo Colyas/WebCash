@@ -1,8 +1,11 @@
 package com.siriusif.managed.bean;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.math.BigDecimal;
@@ -16,10 +19,21 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 
+import com.lowagie.text.DocumentException;
 import com.siriusif.model.Good;
 import com.siriusif.model.Group;
 import com.siriusif.model.Order;
@@ -29,7 +43,9 @@ import com.siriusif.process.OrderProcess;
 import com.siriusif.service.model.GroupDao;
 import com.siriusif.service.model.SaleDao;
 
+import freemarker.core.Environment;
 import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
@@ -127,7 +143,7 @@ public class OrderBean {
 		if ("payCard".equals(choice)) {
 			card = true;
 			LOGGER.info("Is card: " + card);
-		}else{
+		} else {
 			LOGGER.info("Is card: " + card);
 			LOGGER.info("Payment choose of Order: " + choice);
 		}
@@ -190,25 +206,76 @@ public class OrderBean {
 		orderProcess.deleteSale(saleId);
 		order = orderProcess.getOrder(orderId);
 	}
-	
-	public void printOrder(ActionEvent event) throws IOException, TemplateException{
+
+	public void printOrder(ActionEvent event) throws IOException,
+			TemplateException, DocumentException, PrintException {
 		order = orderProcess.getOrder(orderId);
-		
+
 		Configuration configuration = new Configuration();
-		
-		Template template = configuration.getTemplate("src/main/resources/order.ftl");
-		
+		configuration.getDefaultEncoding();
+		configuration.setDefaultEncoding("UTF-8");
+
+		configuration.setObjectWrapper(new DefaultObjectWrapper());
+
+		Template template = configuration
+				.getTemplate("src/main/resources/order.ftl");
+
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("order", order);
-		
+
 		Writer out = new OutputStreamWriter(System.out);
-        template.process(data, out);
-        out.flush();
-        
-        Writer file = new FileWriter (new File("src/main/webapp/pages/order_print.html"));
-        template.process(data, file);
-        file.flush();
-        file.close();
+		template.process(data, out);
+		out.flush();
+
+		Writer file = new FileWriter(new File(
+				"src/main/webapp/pages/order_print.xhtml", "UTF-8"));
+		Environment env = template.createProcessingEnvironment(data, file);
+		env.setOutputEncoding("UTF-8");
+		env.process();
+		template.process(data, file);
+		file.flush();
+		file.close();
+	}
+
+	@SuppressWarnings("unused")
+	public void orderPdfPrint(ActionEvent event) throws IOException,
+			DocumentException, PrintException {
+		String inputFile = "src/main/webapp/pages/order_print.xhtml";
+		String url = new File(inputFile).toURI().toURL().toString();
+		String outputFile = "src/main/resources/order_print.pdf";
+		OutputStream os = new FileOutputStream(outputFile);
+
+		ITextRenderer renderer = new ITextRenderer();
+		renderer.setDocument(url);
+		renderer.layout();
+		renderer.createPDF(os);
+
+		os.close();
+
+		FileInputStream fileInputStream = null;
+		fileInputStream = new FileInputStream("src/main/resources/firstdoc.pdf");
+		if (fileInputStream == null) {
+			return;
+		}
+		DocFlavor docFlavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+		Doc myDoc = new SimpleDoc(fileInputStream, docFlavor, null);
+		PrintRequestAttributeSet printRequestAttr = new HashPrintRequestAttributeSet();
+		PrintService[] printServices = PrintServiceLookup.lookupPrintServices(
+				docFlavor, printRequestAttr);
+
+		PrintService myPrinter = null;
+		for (int i = 0; i < printServices.length; i++) {
+			String printerName = printServices[i].toString();
+			LOGGER.info("Printer found: " + printerName);
+			myPrinter = printServices[i];
+		}
+
+		if (myPrinter != null) {
+			DocPrintJob job = myPrinter.createPrintJob();
+			job.print(myDoc, printRequestAttr);
+		} else {
+			LOGGER.info("printer can't found");
+		}
 	}
 
 	public BigDecimal getChange() {
