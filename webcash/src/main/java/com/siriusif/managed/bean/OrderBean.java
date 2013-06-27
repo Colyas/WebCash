@@ -34,6 +34,8 @@ import org.apache.log4j.Logger;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
+import com.lowagie.text.pdf.BaseFont;
 import com.siriusif.model.Good;
 import com.siriusif.model.Group;
 import com.siriusif.model.Order;
@@ -240,6 +242,7 @@ public class OrderBean {
 	@SuppressWarnings("unused")
 	public void orderPdfPrint(ActionEvent event) throws IOException,
 			DocumentException, PrintException {
+		
 		String inputFile = "src/main/webapp/pages/order_print.xhtml";
 		String url = new File(inputFile).toURI().toURL().toString();
 		String outputFile = "src/main/resources/order_print.pdf";
