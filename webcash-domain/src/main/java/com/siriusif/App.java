@@ -47,7 +47,7 @@ public class App {
 	private static Logger LOGGER = Logger.getLogger(App.class);
 	public static Group[] groups;
 
-	public static void main2(String[] args) throws JsonSyntaxException,
+	public static void main(String[] args) throws JsonSyntaxException,
 			JsonIOException, UnsupportedEncodingException, IOException,
 			TemplateException {
 		LOGGER.info("Import started.");
@@ -76,7 +76,7 @@ public class App {
 		template.process(data, out);
 		out.flush();
 
-		Writer file = new FileWriter(new File("src/main/resources/group.xhtml"));
+		Writer file = new FileWriter(new File("src/main/resources/group.html"));
 		template.process(data, file);
 		file.flush();
 		file.close();
@@ -112,7 +112,7 @@ public class App {
 	}
 
 	@SuppressWarnings("unused")
-	public static void main(String[] args) throws IOException,
+	public static void main2(String[] args) throws IOException,
 			DocumentException, PrintException {
 		String inputFile = "src/main/resources/group.html";
 		String url = new File(inputFile).toURI().toURL().toString();
