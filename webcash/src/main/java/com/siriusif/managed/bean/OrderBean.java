@@ -235,7 +235,7 @@ public class OrderBean {
 		template.process(data, out);
 		out.flush();
 		      
-		Writer file = new FileWriter (new File("src/main/webapp/pages/order_print.xhtml"));
+		Writer file = new FileWriter (new File("src/main/webapp/pages/order_print.html"));
 		template.process(data, file);
 		file.flush();
 		file.close(); 
@@ -248,12 +248,12 @@ public class OrderBean {
 		ITextRenderer renderer = new ITextRenderer();
 		renderer.getFontResolver().addFont("C:/WINDOWS/Fonts/Tahoma.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		String inputFile = "src/main/webapp/pages/order_print.xhtml";
+		String inputFile = "src/main/webapp/pages/order_print.html";
 		URL url = new File(inputFile).toURI().toURL();
 		URLConnection con = url.openConnection();
 		Pattern p = Pattern.compile("text/html;\\s+charset=([^\\s]+)\\s*");
 		Matcher m = p.matcher(con.getContentType());
-		String charset = m.matches() ? m.group(1) : "UTF-8";
+		String charset = m.matches() ? m.group(1) : "Windows-1251";
 		Reader r = new InputStreamReader(con.getInputStream(), charset);
 		StringBuilder buf = new StringBuilder();
 		while (true) {
