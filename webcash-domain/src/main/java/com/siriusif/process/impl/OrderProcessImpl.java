@@ -1,14 +1,20 @@
 package com.siriusif.process.impl;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+
+import javax.print.PrintException;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.xml.sax.SAXException;
 
+import com.lowagie.text.DocumentException;
 import com.siriusif.model.DinnerTable;
 import com.siriusif.model.Good;
 import com.siriusif.model.Order;
@@ -16,11 +22,14 @@ import com.siriusif.model.Sale;
 import com.siriusif.model.Suborder;
 import com.siriusif.process.OrderProcess;
 import com.siriusif.process.WorkshiftProcess;
+import com.siriusif.report.OrderReport;
 import com.siriusif.service.model.DinnerTableDao;
 import com.siriusif.service.model.GoodDao;
 import com.siriusif.service.model.OrderDao;
 import com.siriusif.service.model.SaleDao;
 import com.siriusif.service.model.SuborderDao;
+
+import freemarker.template.TemplateException;
 
 import static com.siriusif.model.helpers.TestHelper.amount;
 
@@ -50,6 +59,9 @@ public class OrderProcessImpl implements OrderProcess {
 
 	@Autowired
 	private WorkshiftProcess workshiftProcess;
+	
+	@Autowired
+	private OrderReport orderReport;
 
 	/**
 	 * @param idTable
@@ -184,6 +196,23 @@ public class OrderProcessImpl implements OrderProcess {
 	@Override
 	public int countOfSuborders(long orderId) {
 		return orderDao.countOfSuborders(orderId);
+	}
+
+	@Override
+	public void orderFromFreeMarkerToHTML(long orderId) throws IOException,
+			TemplateException, DocumentException, PrintException {
+		orderReport.orderFromFreeMarkerToHTML(orderId);
+	}
+	
+	@Override
+	public void orderHTMLToPDF() throws DocumentException, IOException,
+			ParserConfigurationException, SAXException {
+		orderReport.orderHTMLToPDF();
+	}
+	
+	@Override
+	public void printPDFOrder() throws IOException, PrintException{
+		orderReport.printPDFOrder();
 	}
 
 }

@@ -17,6 +17,7 @@
 	<!-- package to look for annotated classes -->
 	<context:component-scan base-package="com.siriusif.service.model.impl" />
 	<context:component-scan base-package="com.siriusif.process.impl" />
+	<context:component-scan base-package="com.siriusif.report.impl" />
 
 	<!-- we will manage transactions with annotations -->
 	<tx:annotation-driven />

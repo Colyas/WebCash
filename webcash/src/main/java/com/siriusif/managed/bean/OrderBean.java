@@ -1,24 +1,8 @@
 package com.siriusif.managed.bean;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
 import java.math.BigDecimal;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -26,27 +10,14 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
-import javax.print.Doc;
-import javax.print.DocFlavor;
-import javax.print.DocPrintJob;
 import javax.print.PrintException;
-import javax.print.PrintService;
-import javax.print.PrintServiceLookup;
-import javax.print.SimpleDoc;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xml.sax.SAXException;
 
 import com.lowagie.text.DocumentException;
-import com.lowagie.text.Font;
-import com.lowagie.text.pdf.BaseFont;
 import com.siriusif.model.Good;
 import com.siriusif.model.Group;
 import com.siriusif.model.Order;
@@ -56,10 +27,6 @@ import com.siriusif.process.OrderProcess;
 import com.siriusif.service.model.GroupDao;
 import com.siriusif.service.model.SaleDao;
 
-import freemarker.core.Environment;
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 import static com.siriusif.jsf.utils.JSFHelper.jsf;
@@ -102,7 +69,7 @@ public class OrderBean {
 	private BigDecimal moneyFromClient;
 
 	private boolean card;
-
+	
 	/**
 	 * get order id from http request
 	 * view opened order
@@ -221,82 +188,10 @@ public class OrderBean {
 	}
 
 	public void printOrder(ActionEvent event) throws IOException,
-			TemplateException, DocumentException, PrintException {
-		order = orderProcess.getOrder(orderId);
-
-		Configuration configuration = new Configuration();
-		   
-		Template template = configuration.getTemplate("src/main/resources/order.ftl");
-		    
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("order", order);
-		  
-		Writer out = new OutputStreamWriter(System.out);
-		template.process(data, out);
-		out.flush();
-		      
-		Writer file = new FileWriter (new File("src/main/webapp/pages/order_print.html"));
-		template.process(data, file);
-		file.flush();
-		file.close(); 
-	}
-
-	@SuppressWarnings("unused")
-	public void orderPdfPrint(ActionEvent event) throws IOException,
-			DocumentException, PrintException, SAXException, ParserConfigurationException {
-		
-		ITextRenderer renderer = new ITextRenderer();
-		renderer.getFontResolver().addFont("C:/WINDOWS/Fonts/Tahoma.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		String inputFile = "src/main/webapp/pages/order_print.html";
-		URL url = new File(inputFile).toURI().toURL();
-		URLConnection con = url.openConnection();
-		Pattern p = Pattern.compile("text/html;\\s+charset=([^\\s]+)\\s*");
-		Matcher m = p.matcher(con.getContentType());
-		String charset = m.matches() ? m.group(1) : "Windows-1251";
-		Reader r = new InputStreamReader(con.getInputStream(), charset);
-		StringBuilder buf = new StringBuilder();
-		while (true) {
-		  int ch = r.read();
-		  if (ch < 0)
-		    break;
-		  buf.append((char) ch);
-		}
-		String strHTML = buf.toString();
-		LOGGER.info(strHTML);
-		org.w3c.dom.Document doc = builder.parse(new ByteArrayInputStream(strHTML.getBytes("UTF-8")));
-		renderer.setDocument((org.w3c.dom.Document) doc, null);
-		File file = new File("src/main/resources/firstdoc.pdf");
-		OutputStream os = new FileOutputStream(file);
-		renderer.layout();
-		renderer.createPDF(os);
-		os.close();
-		LOGGER.info("File write to PDF");
-
-		FileInputStream fileInputStream = null;
-		fileInputStream = new FileInputStream("src/main/resources/firstdoc.pdf");
-		if (fileInputStream == null) {
-			return;
-		}
-		DocFlavor docFlavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-		Doc myDoc = new SimpleDoc(fileInputStream, docFlavor, null);
-		PrintRequestAttributeSet printRequestAttr = new HashPrintRequestAttributeSet();
-		PrintService[] printServices = PrintServiceLookup.lookupPrintServices(
-				docFlavor, printRequestAttr);
-
-		PrintService myPrinter = null;
-		for (int i = 0; i < printServices.length; i++) {
-			String printerName = printServices[i].toString();
-			LOGGER.info("Printer found: " + printerName);
-			myPrinter = printServices[i];
-		}
-
-		if (myPrinter != null) {
-			DocPrintJob job = myPrinter.createPrintJob();
-			job.print(myDoc, printRequestAttr);
-		} else {
-			LOGGER.info("printer can't found");
-		}
+			TemplateException, DocumentException, PrintException, ParserConfigurationException, SAXException {
+		orderProcess.orderFromFreeMarkerToHTML(orderId);
+		orderProcess.orderHTMLToPDF();
+		orderProcess.printPDFOrder();
 	}
 
 	public BigDecimal getChange() {
