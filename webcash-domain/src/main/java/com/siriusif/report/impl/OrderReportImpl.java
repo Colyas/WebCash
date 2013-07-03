@@ -55,35 +55,35 @@ public class OrderReportImpl implements OrderReport {
 	private OrderDao orderDao;
 
 	@Override
-	public void orderFromFreeMarkerToHTML(long orderId) throws IOException,
+	public void orderFromFreeMarkerToHTML(long orderId, String reportName) throws IOException,
 			TemplateException, DocumentException, PrintException {
 		LOGGER.info("CS   ||    " + orderId);
 		Order order = orderDao.find(orderId);
 
 		Configuration configuration = new Configuration();
-
+//		TODO create loader
 		Template template = configuration
-				.getTemplate("src/main/resources/order_report.ftl");
+				.getTemplate("src/main/resources/" + reportName + ".ftl");
 
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("order", order);
-
+//		TODO create loader
 		Writer file = new FileWriter(new File(
-				"src/main/resources/order_report.html"));
+				"src/main/resources/" + reportName + ".html"));
 		template.process(data, file);
 		file.flush();
 		file.close();
 	}
 
 	@Override
-	public void orderHTMLToPDF() throws DocumentException, IOException,
+	public void orderHTMLToPDF(String reportName) throws DocumentException, IOException,
 			ParserConfigurationException, SAXException {
 		ITextRenderer renderer = new ITextRenderer();
 		renderer.getFontResolver().addFont("C:/WINDOWS/Fonts/Tahoma.ttf",
 				BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 		DocumentBuilder builder = DocumentBuilderFactory.newInstance()
 				.newDocumentBuilder();
-		String inputFile = "src/main/resources/order_report.html";
+		String inputFile = "src/main/resources/" + reportName + ".html";
 		URL url = new File(inputFile).toURI().toURL();
 		URLConnection con = url.openConnection();
 		Pattern p = Pattern.compile("text/html;\\s+charset=([^\\s]+)\\s*");
@@ -102,7 +102,8 @@ public class OrderReportImpl implements OrderReport {
 		org.w3c.dom.Document doc = builder.parse(new ByteArrayInputStream(
 				strHTML.getBytes("UTF-8")));
 		renderer.setDocument((org.w3c.dom.Document) doc, null);
-		File file = new File("src/main/resources/order_report.pdf");
+//		TODO create loader
+		File file = new File("src/main/resources/" + reportName + ".pdf");
 		OutputStream os = new FileOutputStream(file);
 		renderer.layout();
 		renderer.createPDF(os);
@@ -112,10 +113,11 @@ public class OrderReportImpl implements OrderReport {
 
 	@Override
 	@SuppressWarnings("unused")
-	public void printPDFOrder() throws IOException, PrintException {
+	public void printPDFOrder(String reportName) throws IOException, PrintException {
 		FileInputStream fileInputStream = null;
+//		TODO create loader
 		fileInputStream = new FileInputStream(
-				"src/main/resources/order_report.pdf");
+				"src/main/resources/" + reportName + ".pdf");
 		if (fileInputStream == null) {
 			return;
 		}
