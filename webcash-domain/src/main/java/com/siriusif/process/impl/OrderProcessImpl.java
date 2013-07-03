@@ -199,20 +199,8 @@ public class OrderProcessImpl implements OrderProcess {
 	}
 
 	@Override
-	public void orderFromFreeMarkerToHTML(long orderId, String reportName) throws IOException,
-			TemplateException, DocumentException, PrintException {
-		orderReport.orderFromFreeMarkerToHTML(orderId, reportName);
-	}
-	
-	@Override
-	public void orderHTMLToPDF(String reportName) throws DocumentException, IOException,
-			ParserConfigurationException, SAXException {
-		orderReport.orderHTMLToPDF(reportName);
-	}
-	
-	@Override
-	public void printPDFOrder(String reportName) throws IOException, PrintException{
-		orderReport.printPDFOrder(reportName);
+	public void printOrder(long orderId, String reportName) throws IOException, PrintException, TemplateException, DocumentException, ParserConfigurationException, SAXException{
+		orderReport.printOrder(orderId, reportName);
 	}
 
 }

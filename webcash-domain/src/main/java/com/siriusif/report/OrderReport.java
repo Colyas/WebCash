@@ -13,12 +13,8 @@ import freemarker.template.TemplateException;
 
 public interface OrderReport {
 
-	void orderFromFreeMarkerToHTML(long orderId, String reportName) throws IOException,
-			TemplateException, DocumentException, PrintException;
-
-	void orderHTMLToPDF(String reportName) throws DocumentException, IOException,
+	void printOrder(long orderId, String reportName) throws IOException,
+			TemplateException, DocumentException, PrintException,
 			ParserConfigurationException, SAXException;
-
-	void printPDFOrder(String reportName) throws IOException, PrintException;
 
 }

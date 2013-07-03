@@ -189,9 +189,7 @@ public class OrderBean {
 
 	public void printOrder(ActionEvent event) throws IOException,
 			TemplateException, DocumentException, PrintException, ParserConfigurationException, SAXException {
-		orderProcess.orderFromFreeMarkerToHTML(orderId, "order_report");
-		orderProcess.orderHTMLToPDF("order_report");
-		orderProcess.printPDFOrder("order_report");
+		orderProcess.printOrder(orderId, "order_report");
 	}
 
 	public BigDecimal getChange() {

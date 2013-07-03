@@ -53,8 +53,14 @@ public class OrderReportImpl implements OrderReport {
 
 	@Autowired
 	private OrderDao orderDao;
-
+	
 	@Override
+	public void printOrder(long orderId, String reportName) throws IOException, TemplateException, DocumentException, PrintException, ParserConfigurationException, SAXException{
+		orderFromFreeMarkerToHTML(orderId, reportName);
+		orderHTMLToPDF(reportName);
+		printPDFOrder(reportName);
+	}
+
 	public void orderFromFreeMarkerToHTML(long orderId, String reportName) throws IOException,
 			TemplateException, DocumentException, PrintException {
 		LOGGER.info("CS   ||    " + orderId);
@@ -75,11 +81,10 @@ public class OrderReportImpl implements OrderReport {
 		file.close();
 	}
 
-	@Override
 	public void orderHTMLToPDF(String reportName) throws DocumentException, IOException,
 			ParserConfigurationException, SAXException {
 		ITextRenderer renderer = new ITextRenderer();
-		renderer.getFontResolver().addFont("C:/WINDOWS/Fonts/Tahoma.ttf",
+		renderer.getFontResolver().addFont("src/main/resources/fonts/TAHOMA.TTF",
 				BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 		DocumentBuilder builder = DocumentBuilderFactory.newInstance()
 				.newDocumentBuilder();
@@ -111,7 +116,6 @@ public class OrderReportImpl implements OrderReport {
 		LOGGER.info("File write to PDF");
 	}
 
-	@Override
 	@SuppressWarnings("unused")
 	public void printPDFOrder(String reportName) throws IOException, PrintException {
 		FileInputStream fileInputStream = null;

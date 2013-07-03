@@ -36,12 +36,7 @@ public interface OrderProcess {
 
 	void deleteSale(long saleId);
 
-	void orderFromFreeMarkerToHTML(long orderId, String reportName) throws IOException,
-			TemplateException, DocumentException, PrintException;
-
-	void orderHTMLToPDF(String reportName) throws DocumentException, IOException,
-			ParserConfigurationException, SAXException;
-
-	void printPDFOrder(String reportName) throws IOException, PrintException;
+	void printOrder(long orderId, String reportName) throws IOException,
+			PrintException, TemplateException, DocumentException, ParserConfigurationException, SAXException;
 
 }
