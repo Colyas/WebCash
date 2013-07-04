@@ -20,7 +20,7 @@ public class App {
 	private static Logger LOGGER = Logger.getLogger(App.class);
 	public static Group[] groups;
 	
-	public static void main1(String[] args) throws JsonSyntaxException, JsonIOException, UnsupportedEncodingException{
+	public static void main(String[] args) throws JsonSyntaxException, JsonIOException, UnsupportedEncodingException{
 		LOGGER.info("Import started.");
 		groups = Helper.fromJson("/grouplist.json",Group[].class);
 		for(Group group : groups){
@@ -55,7 +55,7 @@ public class App {
 		}
 	}
 	
-	public static void main(String[] args){
+	public static void main1(String[] args){
 		BigDecimal val1 = money(15.25);
 		BigDecimal val2 = money(10.00);
 		int val3 = val1.compareTo(val1);
