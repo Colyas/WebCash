@@ -146,6 +146,13 @@
 				</p:accordionPanel>
 			</h:form>
 			<!-- end menu view Groups and Goods -->
+			<h:form>
+				<p:tree value="#{orderBean.groups}" var="group" id="tree">
+					<p:treeNode id="treeNode">
+						<h:outputText value="#{group.name}" id="lblNode" />
+					</p:treeNode>
+				</p:tree>
+			</h:form>
 		</p:layoutUnit>
 	</p:layout>
 </h:body>
